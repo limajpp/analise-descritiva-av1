@@ -84,7 +84,6 @@ tabelaEscolaridadeRaca = table(Base2025_1$`Escolaridade da Vítima`, Base2025_1$
 tabelaEscolaridadeRacaRelativa = prop.table(tabelaEscolaridadeRaca)
 tabelaEscolaridadeRacaRelativaArredondada = round(tabelaEscolaridadeRacaRelativa, 4)
 tabelaEscolaridadeRaca
-tabelaEscolaridadeRacaRelativa
 tabelaEscolaridadeRacaRelativaArredondada
 
 # Convertendo tabelas para data.frames e mantendo apenas os nomes das categorias como primeira coluna(questão 2)
