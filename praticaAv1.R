@@ -34,3 +34,40 @@ tabelaRelativaDiaDaSemana = prop.table(tabelaSimplesDiaDaSemana)
 tabelaRelativaDiaDaSemanaArredondada = round(tabelaRelativaDiaDaSemana, 4)
 tabelaSimplesDiaDaSemana
 tabelaRelativaDiaDaSemanaArredondada
+
+library(xtable)
+
+tabela_completa <- data.frame(
+  Variável = rep(c("Natureza", "Meio Empregado", "Gênero", 
+                   "Escolaridade da Vítima", "Raça da Vítima", "Dia da Semana"), 
+                 times = c(length(tabelaSimplesNatureza),
+                           length(tabelaSimplesMeioEmpregado),
+                           length(tabelaSimplesGenero),
+                           length(tabelaSimplesEscolaridadeDaVitima),
+                           length(tabelaSimplesRacaDaVitima),
+                           length(tabelaSimplesDiaDaSemana))),
+  Categoria = c(names(tabelaSimplesNatureza), 
+                names(tabelaSimplesMeioEmpregado), 
+                names(tabelaSimplesGenero),
+                names(tabelaSimplesEscolaridadeDaVitima), 
+                names(tabelaSimplesRacaDaVitima),
+                names(tabelaSimplesDiaDaSemana)),
+  FrequênciaAbs = c(as.numeric(tabelaSimplesNatureza), 
+                 as.numeric(tabelaSimplesMeioEmpregado), 
+                 as.numeric(tabelaSimplesGenero),
+                 as.numeric(tabelaSimplesEscolaridadeDaVitima), 
+                 as.numeric(tabelaSimplesRacaDaVitima),
+                 as.numeric(tabelaSimplesDiaDaSemana)),
+  FrequênciaRel = c(as.numeric(tabelaRelativaNatureza), 
+                as.numeric(tabelaRelativaMeioEmpregado), 
+                as.numeric(tabelaRelativaGenero),
+                as.numeric(tabelaRelativaEscolaridadeDaVitima), 
+                as.numeric(tabelaRelativaRacaDaVitima),
+                as.numeric(tabelaRelativaDiaDaSemana))
+)
+
+tabela_completa$FrequênciaRel = round(tabela_completa$FrequênciaRel, 4)
+
+print(xtable(tabela_completa, caption = "Tabela de Frequências e Proporções"),
+      include.rownames = FALSE, file = "C:/Users/joaop/OneDrive/Documentos/Metodos Quantitativos/Prática AV1/tabela_frequencias.tex")
+
