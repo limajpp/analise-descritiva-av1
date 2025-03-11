@@ -113,3 +113,28 @@ print(xtable(dfEscolaridadeRaca, caption = "Tabela Cruzada: Escolaridade da Vít
       include.rownames = FALSE, file = "C:/Users/joaop/OneDrive/Documentos/Metodos Quantitativos/Prática AV1/tabelaEscolaridadeRacaq2.tex")
 print(xtable(dfEscolaridadeRacaRelativa, caption = "Tabela Cruzada Relativa: Escolaridade da Vítima vs Raça da Vítima"),
       include.rownames = FALSE, file = "C:/Users/joaop/OneDrive/Documentos/Metodos Quantitativos/Prática AV1/tabelaEscolaridadeRacaRelativaq2.tex")
+
+# Construindo os gráficos de setor da questão 3
+pie(table(Base2025_1$Gênero), 
+    col = c("blue", "pink"), 
+    main = "Distribuição do Gênero")
+
+pie(table(Base2025_1$`Meio Empregado`), 
+    col = c("red", "green", "yellow"), 
+    main = "Distribuição do Meio Empregado")
+
+# Montando os gráficos de barra da questão 4
+barplot(table(Base2025_1$`Dia da Semana`), 
+        xlab = "Dia da Semana", 
+        ylab = "Quantidade", 
+        ylim = c(0, max(table(Base2025_1$`Dia da Semana`)) * 1.2), 
+        col = c("blue", "red", "green", "yellow", "purple", "orange", "pink"), 
+        main = "Frequência por Dia da Semana")
+
+barplot(table(Base2025_1$`Escolaridade da Vítima`), 
+        xlab = "Escolaridade", 
+        ylab = "Quantidade", 
+        ylim = c(0, max(table(Base2025_1$`Escolaridade da Vítima`)) * 1.2), 
+        col = c("darkred", "blue", "green", "orange", "purple", "gray"), 
+        main = "Frequência por Escolaridade da Vítima")
+
