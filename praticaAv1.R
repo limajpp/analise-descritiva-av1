@@ -35,42 +35,29 @@ tabelaRelativaDiaDaSemanaArredondada = round(tabelaRelativaDiaDaSemana, 4)
 tabelaSimplesDiaDaSemana
 tabelaRelativaDiaDaSemanaArredondada
 
-# Criando a tabela final de frequências da questão 1 e transformando em ".tex"
 library(xtable)
 
-tabelaCompleta = data.frame(
-  Variável = rep(c("Natureza", "Meio Empregado", "Gênero", 
-                   "Escolaridade da Vitima", "Raça da Vítima", "Dia da Semana"), 
-                 times = c(length(tabelaSimplesNatureza),
-                           length(tabelaSimplesMeioEmpregado),
-                           length(tabelaSimplesGenero),
-                           length(tabelaSimplesEscolaridadeDaVitima),
-                           length(tabelaSimplesRacaDaVitima),
-                           length(tabelaSimplesDiaDaSemana))),
-  Categoria = c(names(tabelaSimplesNatureza), 
-                names(tabelaSimplesMeioEmpregado), 
-                names(tabelaSimplesGenero),
-                names(tabelaSimplesEscolaridadeDaVitima), 
-                names(tabelaSimplesRacaDaVitima),
-                names(tabelaSimplesDiaDaSemana)),
-  FrequênciaAbs = c(as.numeric(tabelaSimplesNatureza), 
-                    as.numeric(tabelaSimplesMeioEmpregado), 
-                    as.numeric(tabelaSimplesGenero),
-                    as.numeric(tabelaSimplesEscolaridadeDaVitima), 
-                    as.numeric(tabelaSimplesRacaDaVitima),
-                    as.numeric(tabelaSimplesDiaDaSemana)),
-  FrequênciaRel = c(as.numeric(tabelaRelativaNatureza), 
-                    as.numeric(tabelaRelativaMeioEmpregado), 
-                    as.numeric(tabelaRelativaGenero),
-                    as.numeric(tabelaRelativaEscolaridadeDaVitima), 
-                    as.numeric(tabelaRelativaRacaDaVitima),
-                    as.numeric(tabelaRelativaDiaDaSemana))
-)
+gerar_tabela_frequencia <- function(var, nome_arquivo, nome_variavel) {
+  tabelaSimples <- table(var)
+  tabelaRelativa <- prop.table(tabelaSimples)
+  tabelaRelativaArredondada <- round(tabelaRelativa, 4)
+  
+  tabelaFinal <- data.frame(
+    Categoria = names(tabelaSimples),
+    FrequênciaAbs = as.numeric(tabelaSimples),
+    FrequênciaRel = as.numeric(tabelaRelativaArredondada)
+  )
+  
+  print(xtable(tabelaFinal, caption = paste("Tabela de Frequências -", nome_variavel)),
+        include.rownames = FALSE, file = paste0("C:/Users/joaop/OneDrive/Documentos/Metodos Quantitativos/Prática AV1/q1/", nome_arquivo, ".tex"))
+}
+gerar_tabela_frequencia(Base2025_1$Natureza, "tabelaNaturezaq1", "Natureza")
+gerar_tabela_frequencia(Base2025_1$`Meio Empregado`, "tabelaMeioEmpregadoq1", "Meio Empregado")
+gerar_tabela_frequencia(Base2025_1$Gênero, "tabelaGeneroq1", "Gênero")
+gerar_tabela_frequencia(Base2025_1$`Escolaridade da Vítima`, "tabelaEscolaridadeq1", "Escolaridade da Vítima")
+gerar_tabela_frequencia(Base2025_1$`Raça da Vítima`, "tabelaRacaq1", "Raça da Vítima")
+gerar_tabela_frequencia(Base2025_1$`Dia da Semana`, "tabelaDiaDaSemanaq1", "Dia da Semana")
 
-tabelaCompleta$FrequênciaRel = round(tabelaCompleta$FrequênciaRel, 4)
-
-print(xtable(tabelaCompleta, caption = "Tabela de Frequências"),
-      include.rownames = FALSE, file = "C:/Users/joaop/OneDrive/Documentos/Metodos Quantitativos/Prática AV1/tabelaq1.tex")
 
 # Criando as tabelas cruzadas meioEmpregado vs. genero da questão 2
 tabelaMeioGenero = table(Base2025_1$`Meio Empregado`, Base2025_1$`Gênero`)
@@ -137,4 +124,40 @@ barplot(table(Base2025_1$`Escolaridade da Vítima`),
         ylim = c(0, max(table(Base2025_1$`Escolaridade da Vítima`)) * 1.2), 
         col = c("darkred", "blue", "green", "orange", "purple", "gray"), 
         main = "Frequência por Escolaridade da Vítima")
+
+# Construindo os gráficos por linha da questão 5
+Base2025_1$Data <- as.Date(Base2025_1$Data, format="%Y-%m-%d")
+freq_data <- table(Base2025_1$Data)
+
+plot(as.Date(names(freq_data)), as.numeric(freq_data), type="l", col="blue",
+     xlab="Data", ylab="Frequência", main="Frequência ao Longo do Tempo", 
+     lwd=2)
+
+Base2025_1$Hora <- as.POSIXct(Base2025_1$Hora, format="%Y-%m-%d %H:%M:%S")
+Base2025_1$Hora <- format(Base2025_1$Hora, "%H")
+freq_hora <- table(Base2025_1$Hora)
+
+plot(as.numeric(names(freq_hora)), as.numeric(freq_hora), type="l", col="red",
+     xlab="Hora", ylab="Frequência", main="Frequência por Hora", 
+     lwd=2, xaxt="n")
+
+axis(1, at=0:23, labels=0:23)
+
+# Medidas de posição e separatrizes para a questão 6
+Base2025_1$`Idade da Vítima` <- as.numeric(Base2025_1$`Idade da Vítima`)
+summary(Base2025_1$`Idade da Vítima`)
+quantile(Base2025_1$`Idade da Vítima`, probs = c(0.25, 0.50, 0.75), na.rm = TRUE)
+
+# Medidades de dispersão para a idade da vítima(Questão 7)
+var(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+sd(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+range(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+IQR(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+
+# BoxPlot da questão 8
+boxplot(Base2025_1$`Idade da Vítima`, 
+        main = "Boxplot da Idade da Vítima", 
+        ylab = "Idade", 
+        col = "lightblue",
+        na.rm = TRUE)
 
