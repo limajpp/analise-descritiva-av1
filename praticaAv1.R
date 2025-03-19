@@ -153,12 +153,21 @@ axis(1, at=0:23, labels=0:23)
 Base2025_1$`Idade da Vítima` <- as.numeric(Base2025_1$`Idade da Vítima`)
 summary(Base2025_1$`Idade da Vítima`)
 quantile(Base2025_1$`Idade da Vítima`, probs = c(0.25, 0.50, 0.75), na.rm = TRUE)
+moda <- function(x) {
+  uniq_x <- unique(x)  
+  uniq_x[which.max(tabulate(match(x, uniq_x)))] 
+}
+moda(Base2025_1$`Idade da Vítima`)
+
 
 # Medidades de dispersão para a idade da vítima(Questão 7)
 var(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
-sd(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+desvio_padrao = sd(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+desvio_padrao
 range(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
 IQR(Base2025_1$`Idade da Vítima`, na.rm = TRUE)
+cv = (desvio_padrao / media) * 100
+cv
 
 # BoxPlot da questão 8
 boxplot(Base2025_1$`Idade da Vítima`, 
