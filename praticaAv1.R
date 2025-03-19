@@ -132,11 +132,12 @@ barplot(table(Base2025_1$`Escolaridade da Vítima`),
 
 # Construindo os gráficos por linha da questão 5
 Base2025_1$Data <- as.Date(Base2025_1$Data, format="%Y-%m-%d")
-freq_data <- table(Base2025_1$Data)
+Base2025_1$Ano <- format(Base2025_1$Data, "%Y")
+freq_ano <- table(Base2025_1$Ano)
 
-plot(as.Date(names(freq_data)), as.numeric(freq_data), type="l", col="blue",
-     xlab="Data", ylab="Frequência", main="Frequência ao Longo do Tempo", 
-     lwd=2)
+plot(names(freq_ano), as.numeric(freq_ano), type="l", col="blue",
+     xlab="Ano", ylab="Frequência", main="Frequência ao Longo dos Anos", 
+     lwd=2, pch=16)
 
 Base2025_1$Hora <- as.POSIXct(Base2025_1$Hora, format="%Y-%m-%d %H:%M:%S")
 Base2025_1$Hora <- format(Base2025_1$Hora, "%H")
