@@ -118,12 +118,17 @@ barplot(table(Base2025_1$`Dia da Semana`),
         col = c("blue", "red", "green", "yellow", "purple", "orange", "pink"), 
         main = "Frequência por Dia da Semana")
 
+nomes_abreviados <- c("Alfabet.", "Fund. C", "Fund. I", "Médio C", "Médio I", 
+                      "Não Alf.", "Não Inf.", "Sup. C", "Sup. I")
+cores <- c("darkred", "blue", "green", "orange", "purple", "gray", "pink", "yellow", "cyan")
 barplot(table(Base2025_1$`Escolaridade da Vítima`), 
         xlab = "Escolaridade", 
         ylab = "Quantidade", 
         ylim = c(0, max(table(Base2025_1$`Escolaridade da Vítima`)) * 1.2), 
-        col = c("darkred", "blue", "green", "orange", "purple", "gray"), 
-        main = "Frequência por Escolaridade da Vítima")
+        col = cores, 
+        main = "Frequência por Escolaridade da Vítima", 
+        names.arg = nomes_abreviados,
+        las = 2)
 
 # Construindo os gráficos por linha da questão 5
 Base2025_1$Data <- as.Date(Base2025_1$Data, format="%Y-%m-%d")
